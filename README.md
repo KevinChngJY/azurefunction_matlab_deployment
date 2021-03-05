@@ -19,6 +19,8 @@ Generally, solution(1) would allow your Azure function response faster than solu
 Function supported for code generation (MATLAB Coder):
 [MathWorks Documentation](https://www.mathworks.com/help/coder/ug/functions-and-objects-supported-for-cc-code-generation.html)
 
+Any inquiries, you may email me. kevin.chng@techsource-asia.com, I will try to help if my time is allowed.
+
 ---
 
 ## Solution 1 : MATLAB Coder
