@@ -154,13 +154,17 @@ In the previous example, replace <STORAGE_NAME> with the name of the account you
 
 16)	 In the following example, replace <APP_NAME> with the name of your app.
 
-```func azure functionapp publish <APP_NAME>```
+```
+func azure functionapp publish <APP_NAME>
+```
 
 For my case :
 
 ![s1_11](img/s1_11.jpg)
  
-```func azure functionapp publish matlabazurefunction```
+```
+func azure functionapp publish matlabazurefunction
+```
 
 17)	Open browser to access my function as follows:
 https://matlabazurefunction.azurewebsites.net/api/matlabexample?value1=1&value2=2
