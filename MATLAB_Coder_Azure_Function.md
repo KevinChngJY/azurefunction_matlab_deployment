@@ -54,8 +54,9 @@ Now, you can look for .dll in the codegen folder.
  
 
 If the screen above is too small, you may copy the command below :
+```
 >> func new --name MatlabExample --template "HTTP trigger" --authlevel "anonymous"
-
+```
 
 9)	Copy the generated dll into the path of Azure Function’s Folder.
  
@@ -64,6 +65,7 @@ If the screen above is too small, you may copy the command below :
 
 
 11)	Open MatlabExample.cs with Notepad, edit the code :
+```
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -107,34 +109,35 @@ namespace MATLABAzureFunctionProj
         }
     }
 }
-
+```
 
 Create Supporting Azure Resources for your function
 [Notes: Please skip this steps 12 -15 if you want to update this application to your existing resource group, storage account and Azure Function]
 12)	If you haven't done so already, sign in to Azure:
-	az login
+	```az login```
 The az login command signs you into your Azure account.
 13)	Create a resource group named AzureFunctionsQuickstart-rg in the westeurope region:
-	az group create --name AzureFunctionsQuickstart-rg --location westeurope
+	```az group create --name AzureFunctionsQuickstart-rg --location westeurope```
 The az group create command creates a resource group. You generally create your resource group and resources in a region near you, using an available region returned from the az account list-locations command.
 14)	Create a general-purpose storage account in your resource group and region:
-az storage account create --name <STORAGE_NAME> --location westeurope --resource-group AzureFunctionsQuickstart-rg --sku Standard_LRS
+	```az storage account create --name <STORAGE_NAME> --location westeurope --resource-group AzureFunctionsQuickstart-rg --sku Standard_LRS```
 The az storage account create command creates the storage account.
 In the previous example, replace <STORAGE_NAME> with a name that is appropriate to you and unique in Azure Storage. Names must contain three to 24 characters numbers and lowercase letters only. Standard_LRS specifies a general-purpose account, which is supported by Functions.
 15)	Create the function app in Azure:
-az functionapp create --resource-group AzureFunctionsQuickstart-rg --consumption-plan-location westeurope --runtime dotnet --functions-version 3 --name <APP_NAME> --storage-account <STORAGE_NAME>
+	```az functionapp create --resource-group AzureFunctionsQuickstart-rg --consumption-plan-location westeurope --runtime dotnet --functions-version 3 --name <APP_NAME> --storage-account <STORAGE_NAME>```
 The az functionapp create command creates the function app in Azure.
 In the previous example, replace <STORAGE_NAME> with the name of the account you used in the previous step, and replace <APP_NAME> with a globally unique name appropriate to you. The <APP_NAME> is also the default DNS domain for the function app.
 
 Deploy the function project to Azure
 16)	 In the following example, replace <APP_NAME> with the name of your app.
 
-func azure functionapp publish <APP_NAME>
+	```func azure functionapp publish <APP_NAME>```
 
 For my case :
 
  
->> func azure functionapp publish matlabazurefunction
+``` func azure functionapp publish matlabazurefunction```
+
 17)	Open browser to access my function as follows:
 https://matlabazurefunction.azurewebsites.net/api/matlabexample?value1=1&value2=2
 
