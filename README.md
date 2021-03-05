@@ -63,7 +63,7 @@ For this solution, I use python as a bridge to linkup Azure Function and MCR. Ho
 
 Deploying function code in a custom Linux container requires Premium plan or a Dedicated (App Service) plan hosting. Therefore, completing this example might incurs costs of a few US dollars in your Azure account, which you can minimize by cleaning-up resources when you're done.
 
-![Arhictecture_2](img/s2_00.jpg)
+![Arhictecture_2](img/s2_01.jpg)
 
 ---
 
