@@ -131,12 +131,12 @@ In the previous example, replace <STORAGE_NAME> with the name of the account you
 Deploy the function project to Azure
 16)	 In the following example, replace <APP_NAME> with the name of your app.
 
-	```func azure functionapp publish <APP_NAME>```
+```func azure functionapp publish <APP_NAME>```
 
 For my case :
 
  
-``` func azure functionapp publish matlabazurefunction```
+```func azure functionapp publish matlabazurefunction```
 
 17)	Open browser to access my function as follows:
 https://matlabazurefunction.azurewebsites.net/api/matlabexample?value1=1&value2=2
