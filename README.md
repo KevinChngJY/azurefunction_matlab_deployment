@@ -42,6 +42,7 @@ The links below are my references for this solution:
 ### Example :
 Below is the detail steps to deploy Azure Function through MATLAB Coder:
 
+[Example](https://github.com/KevinChngJY/azurefunction_matlab_deployment/blob/main/MATLAB_Coder_Azure_Function.md)
 
 ---
 
