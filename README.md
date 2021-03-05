@@ -14,10 +14,35 @@ In this documentation, it will walk you through two ways to embed MATLAB Algorit
   1) through MATLAB Coder > C# (.dll)
   2) through MATLAB Compiler SDK > Python Package > Docker Image
 
-Generally, solution(1) would allow your Azure function response faster than solution(2), as the C# is directly supported by Azure function natively. For solution (2), it requires more storage space for the docker image. Intutively, solution (2) might be preferable due to MATLAB Runtime supports almost all MATLAB Function but MATLAB Coder is only supporting limited function for code generation. 
+Generally, solution(1) would allow your Azure function response faster than solution(2), as the C# is directly supported by Azure function natively. For solution (2), it requires more storage space for the docker image. Intuitively, solution (2) might be preferable due to MATLAB Runtime supports almost all MATLAB Function but MATLAB Coder is only supporting limited function for code generation. 
 
 Function supported for code generation (MATLAB Coder):
 [MathWorks Documentation](https://www.mathworks.com/help/coder/ug/functions-and-objects-supported-for-cc-code-generation.html)
 
-## Configure your local environment :
+---
+
+## Solution 1 : MATLAB Coder
+
+In this solution, we will generate standalone c/c++ source code from MATLAB algorithm and wrap it as dll.
+By default, Azure function supports 32bits Platform, it might require more troubleshooting if we try to switch it to 64bits. Therefore, the generated MATLAB .dll has to be 32bits. This process could be done using MATLAB Coder and Visual Studio Compiler. Subsequently, we embed this .dll into our Azure Function dotnet framework and later deploy to Azure Cloud.
+
+### Configure your local environment
+Before you begin, you must have the following:
+
+1) Azure Function Tool
+https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash#v2
+2) Microsoft Visual Studio 9.0/10.0/11.0/12.0/14.0/15.0
+3) MATLAB & MATLAB Coder
+
+References for me to write this documentation:
+1) Generate 32bits dll using MATLAB Coder
+https://www.mathworks.com/help/coder/ug/build-32-bit-dll-on-64-bit-windows-platform-using-msvc-toolchain.html
+2) Create C# function in Azure for Command Line (Azure Function)
+https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cbrowser
+
+
+---
+
+## Solution 2 : MATLAB Compiler SDK
+
 
