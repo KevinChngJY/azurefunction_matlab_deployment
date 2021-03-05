@@ -22,7 +22,7 @@ https://www.mathworks.com/help/coder/ug/functions-and-objects-supported-for-cc-c
 ## Example :
 1)	Build MATLAB function as follows:
 
-![Searcher 1](img/s1_01.jpg)
+![s1_01](img/s1_01.jpg)
  
 
 2)	Open example below to generate your MATLAB function as standalone 32bits dll.
@@ -32,26 +32,33 @@ openExample('coder/Build32bitDLLOn64bitWindowsRPlatformUsingMSVCToolchainExample
 ```
 In this example, it demonstrates how to generate myMatlabFunction.m (A MATLAB function) to standalone 32bits dll. Now, copy your MATLAB function(myadd.m) to this path.
 
-
+![s1_02](img/s1_02.jpg)
  
 3)	In the example (Build32bitDLLOn64bitWindowsRPlatformUsingMSVCToolchainExample.m), replace all myMatlabfunction with your function name (myadd) as follows:
 
- 
+ ![s1_03](img/s1_03.jpg)
 
 4)	In the line 101/Under “Generate Code and Build a DLL” Section, add one more argument – double(1.0) :
+ 
+![s1_04](img/s1_04.jpg) 
  
 5)	Now, play “run” to run the entire script.
 [Notes : you might have error in the last section, kindly ignore it as we don’t need executable file in this demo]
 Now, you can look for .dll in the codegen folder.
+
+![s1_05](img/s1_05.jpg)
  
 6)	Open command window to create Azure Function in a folder named MATLABAzureFunctionProj with the C#/dotnet runtime.
+
+![s1_06](img/s1_06.jpg)
  
 7)	Navigate into the project folder.
- 
 
+![s1_07](img/s1_07.jpg)
+ 
 8)	Add a function to your project, where the –name argument is the unique name of your function (MatlabExample) and the –template argument specifies the function’s trigger (HTTP).
 
- 
+![s1_08](img/s1_09.jpg)
 
 If the screen above is too small, you may copy the command below :
 ```
@@ -59,10 +66,12 @@ func new --name MatlabExample --template "HTTP trigger" --authlevel "anonymous"
 ```
 
 9)	Copy the generated dll into the path of Azure Function’s Folder.
+
+![s1_09](img/s1_09.jpg)
  
 10)	Open MATLABAzureFunctionProj.csproj with Notepad, add myadd.dll into the itemgroups as follow :
  
-
+![s1_10](img/s1_10.jpg)
 
 11)	Open MatlabExample.cs with Notepad, edit the code :
 ```
@@ -148,7 +157,7 @@ In the previous example, replace <STORAGE_NAME> with the name of the account you
 ```func azure functionapp publish <APP_NAME>```
 
 For my case :
-
+![s1_11](img/s1_11.jpg)
  
 ```func azure functionapp publish matlabazurefunction```
 
