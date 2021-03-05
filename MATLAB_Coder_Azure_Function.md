@@ -166,7 +166,14 @@ For my case :
 func azure functionapp publish matlabazurefunction
 ```
 
-17)	Open browser to access my function as follows:
+17)	Get your Azure Function Url:
+
+![s1_11](img/s1_12.jpg)
+
+```
+func azure functionapp list-functions <APP_NAME>
+```
+
 https://matlabazurefunction.azurewebsites.net/api/matlabexample?value1=1&value2=2
 
 
