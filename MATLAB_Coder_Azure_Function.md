@@ -157,6 +157,7 @@ In the previous example, replace <STORAGE_NAME> with the name of the account you
 ```func azure functionapp publish <APP_NAME>```
 
 For my case :
+
 ![s1_11](img/s1_11.jpg)
  
 ```func azure functionapp publish matlabazurefunction```
