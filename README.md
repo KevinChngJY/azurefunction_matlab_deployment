@@ -34,11 +34,14 @@ https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=
 2) Microsoft Visual Studio 9.0/10.0/11.0/12.0/14.0/15.0
 3) MATLAB & MATLAB Coder
 
-References for me to write this documentation:
-1) Generate 32bits dll using MATLAB Coder
-https://www.mathworks.com/help/coder/ug/build-32-bit-dll-on-64-bit-windows-platform-using-msvc-toolchain.html
-2) Create C# function in Azure for Command Line (Azure Function)
-https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cbrowser
+### References:
+The links below are my references for this solution:
+
+1) [Generate 32bits dll using MATLAB Coder](https://www.mathworks.com/help/coder/ug/build-32-bit-dll-on-64-bit-windows-platform-using-msvc-toolchain.html)
+2) [Create C# function in Azure for Command Line (Azure Function)](https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cbrowser)
+
+### Example 
+Below is the detail steps to deploy Azure Function through MATLAB Coder:
 
 
 ---
