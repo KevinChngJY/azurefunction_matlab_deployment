@@ -30,7 +30,6 @@ By default, Azure function supports 32bits Platform, it might require more troub
 
 ---
 
-## Other possibilities
 ### Configure your local environment :
 Before you begin, you must have the following:
 
@@ -53,4 +52,7 @@ Below is the detail steps to deploy Azure Function through MATLAB Coder:
 
 ## Solution 2 : MATLAB Compiler SDK
 
+---
+
+## Solution 3 : Other possibilities
 
