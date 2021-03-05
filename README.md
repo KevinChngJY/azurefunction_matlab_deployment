@@ -82,6 +82,10 @@ The links below are my references for this solution:
 1) [Generate Python Package and Build Python Application](https://www.mathworks.com/help/compiler_sdk/gs/create-a-python-application-with-matlab-code.htmll)
 2) [Create a function on Linux using a custom container (Azure Function)]https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-function-linux-custom-image?tabs=bash%2Cportal&pivots=programming-language-python)
 
+### Example :
+Use Window as development environment : drafting
+Use linux as development environment : drafting
+
 ---
 
 ## Other possibilities
