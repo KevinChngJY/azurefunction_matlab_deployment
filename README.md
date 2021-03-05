@@ -63,6 +63,17 @@ For this solution, I use python as a bridge to linkup Azure Function and MCR. Ho
 
 Deploying function code in a custom Linux container requires Premium plan or a Dedicated (App Service) plan hosting. Therefore, completing this example might incurs costs of a few US dollars in your Azure account, which you can minimize by cleaning-up resources when you're done.
 
+---
+
+### Configure your local environment :
+Before you begin, you must have the following:
+
+1) [Azure Function Tool](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash#v2)
+2) The Azure CLI version 2.4 or later.
+3) Python 3.8 (64-bit), Python 3.7 (64-bit), Python 3.6 (64-bit), which are supported by Azure Functions.
+4) Docker and Docker ID
+5) MATLAB and MATLAB Compiler SDK
+
 ### References:
 The links below are my references for this solution:
 
