@@ -28,6 +28,8 @@ Any inquiries, you may email me : kevin.chng@techsource-asia.com, I will try to 
 In this solution, we will generate standalone c/c++ source code from MATLAB algorithm and wrap it as dll.
 By default, Azure function supports 32bits Platform, it might require more troubleshooting if we try to switch it to 64bits. Therefore, the generated MATLAB .dll has to be 32bits. This process could be done using MATLAB Coder and Visual Studio Compiler. Subsequently, we embed this .dll into our Azure Function dotnet framework and later deploy to Azure Cloud.
 
+![Arhictecture_1](img/s1_00.jpg)
+
 ---
 
 ### Configure your local environment :
