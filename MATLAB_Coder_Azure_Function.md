@@ -27,7 +27,7 @@ https://www.mathworks.com/help/coder/ug/functions-and-objects-supported-for-cc-c
 
 2)	Open example below to generate your MATLAB function as standalone 32bits dll.
 In your MATLAB, type 
-openExample('coder/Build32bitDLLOn64bitWindowsRPlatformUsingMSVCToolchainExample')
+'''openExample('coder/Build32bitDLLOn64bitWindowsRPlatformUsingMSVCToolchainExample')'''
 In this example, it demonstrates how to generate myMatlabFunction.m (A MATLAB function) to standalone 32bits dll. Now, copy your MATLAB function(myadd.m) to this path.
 
 
