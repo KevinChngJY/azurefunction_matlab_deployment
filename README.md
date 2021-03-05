@@ -54,6 +54,21 @@ Below is the detail steps to deploy Azure Function through MATLAB Coder:
 
 ## Solution 2 : MATLAB Compiler SDK
 
+In this solution, we will deploy code to Azure Function as a custom docker container using a linux base image. This customer image allows us to install additional dependency or configuration that isn't provided by the built in image. We insall MATLAB runtime (MCR) inside this custom docker container to provide the environment to run MATLAB code.
+
+Although you are allowed to install additional dependency inside the custom docker, it is still restricted us to only use the following languages:
+C#,Java,Javascript,PowerShell,Python,TypeScript
+
+For this solution, I use python as a bridge to linkup Azure Function and MCR. However, when you are selecting other languages, kindly make sure that your selected linux base image is 64bit which MCR requires 64bits environment.
+
+Deploying function code in a custom Linux container requires Premium plan or a Dedicated (App Service) plan hosting. Therefore, completing this example might incurs costs of a few US dollars in your Azure account, which you can minimize by cleaning-up resources when you're done.
+
+### References:
+The links below are my references for this solution:
+
+1) [Generate Python Package and Build Python Application](https://www.mathworks.com/help/compiler_sdk/gs/create-a-python-application-with-matlab-code.htmll)
+2) [Create a function on Linux using a custom container (Azure Function)]https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-function-linux-custom-image?tabs=bash%2Cportal&pivots=programming-language-python)
+
 ---
 
 ## Other possibilities
