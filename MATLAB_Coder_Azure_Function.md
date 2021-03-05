@@ -21,6 +21,7 @@ https://www.mathworks.com/help/coder/ug/functions-and-objects-supported-for-cc-c
 
 ## Example :
 1)	Build MATLAB function as follows:
+![Searcher 1](img/s1_01.jpg)
  
 
 2)	Open example below to generate your MATLAB function as standalone 32bits dll.
