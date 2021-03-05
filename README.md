@@ -54,5 +54,5 @@ Below is the detail steps to deploy Azure Function through MATLAB Coder:
 
 ---
 
-## Solution 3 : Other possibilities
+## Other possibilities
 
