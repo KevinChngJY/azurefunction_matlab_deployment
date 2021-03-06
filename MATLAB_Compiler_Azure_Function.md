@@ -100,21 +100,33 @@ Files inside the "for_redistribution_files_only" folder:
 
 ![s2_04](img/s2_05.jpg)
 
+4. Open cmd, navigate to this foler to install this generated python package.
+
+
+
 ### Create and test the local functions project
 
 4. In a terminal or command prompt, run the following command for your chosen language to create a function app project in a folder named LocalFunctionsProject.
 
-'''
+```
 func init LocalFunctionsProject --worker-runtime python --docker
-'''
+```
 
 The --docker option generates a Dockerfile for the project, which defines a suitable custom container for use with Azure Functions and the selected runtime.
 
 5. Navigate into the project folder:
 
-'''
+```
 cd LocalFunctionsProject
-'''
+```
+
+6. Add a function to your project by using the following command, where the --name argument is the unique name of your function and the --template argument specifies the function's trigger. 
+
+```
+func new --name HttpExample --template "HTTP trigger"
+```
+
+7. Edit HTTP triger to import our generated Python package.
 
 
 
