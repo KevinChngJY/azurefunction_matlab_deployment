@@ -80,6 +80,8 @@ to sign in to Docker. This command fails if Docker isn't running, in which case 
 
 ## Example :
 
+### MARLAB
+
 1. Build MATLAB function as follows:
 
 ![s1_01](img/s1_01.jpg)
@@ -97,6 +99,22 @@ to sign in to Docker. This command fails if Docker isn't running, in which case 
 Files inside the "for_redistribution_files_only" folder:
 
 ![s2_04](img/s2_05.jpg)
+
+### Create and test the local functions project
+
+4. In a terminal or command prompt, run the following command for your chosen language to create a function app project in a folder named LocalFunctionsProject.
+
+'''
+func init LocalFunctionsProject --worker-runtime python --docker
+'''
+
+The --docker option generates a Dockerfile for the project, which defines a suitable custom container for use with Azure Functions and the selected runtime.
+
+5. Navigate into the project folder:
+
+'''
+cd LocalFunctionsProject
+'''
 
 
 
