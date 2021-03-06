@@ -111,6 +111,7 @@ You would get the outcome as follows:
 ![s2_04](img/s2_06.jpg)
 
 ### Create and test the local functions project
+#### I use powershell for the following steps.
 
 4. In a terminal or command prompt, run the following command for your chosen language to create a function app project in a folder named LocalFunctionsProject.
 
@@ -134,9 +135,44 @@ func new --name HttpExample --template "HTTP trigger"
 
 7. Edit HTTP triger to import our generated Python package :
 
-Open HttpExample Folder, then open "____init____.py"
+Open HttpExample Folder, then open "init.py", edit it to as follows:
 
+```
+import logging
+import azure.functions as func
+import myadd
 
+def main(req: func.HttpRequest) -> func.HttpResponse:
+	logging.info('Python HTTP trigger function processed a request.')
+	value1 = req.params.get('value1')
+	value2 = req.params.get('value2')
+	
+	if not value1:
+		try:
+			req_body = req.get_json()
+		except ValueError:
+			pass
+		else:
+			value1= req_body.get('value1')
+			value2= req_body.get('value2')
+	
+	if value1:
+		myadd.initialize_runtime(['-nojvm', '-nodisplay'])
+		m=myadd.initialize()
+		final = m.myadd(float(value1),float(value2))
+		return func.HttpResponse(f"Hello, value1+value2 is {final}")
+	else:
+		return func.HttpResponse(
+             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
+             status_code=200
+        )
+```
+
+8. To test the function locally, start the local Azure Functions runtime host in the root of the project folder:
+
+```
+func start  
+```
 
 
 
