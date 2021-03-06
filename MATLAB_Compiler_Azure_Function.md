@@ -132,7 +132,11 @@ cd LocalFunctionsProject
 func new --name HttpExample --template "HTTP trigger"
 ```
 
-7. Edit HTTP triger to import our generated Python package.
+7. Edit HTTP triger to import our generated Python package :
+
+Open HttpExample Folder, then open "____init____.py"
+
+
 
 
 
