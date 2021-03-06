@@ -272,7 +272,7 @@ Depending on your network speed, pushing the image the first time might take a 2
 az login
 ```
 
-Create a resource group with the az group create command. The following example creates a resource group named AzureFunctionsContainers-rg in the westeurope region. (You generally create your resource group and resources in a region near you, using an available region from the az account list-locations command.)
+14. reate a resource group with the az group create command. The following example creates a resource group named AzureFunctionsContainers-rg in the westeurope region. (You generally create your resource group and resources in a region near you, using an available region from the az account list-locations command.)
 
 ```
 az group create --name AzureFunctionsContainers-rg --location westeurope
@@ -280,14 +280,14 @@ az group create --name AzureFunctionsContainers-rg --location westeurope
 
 You can't host Linux and Windows apps in the same resource group. If you have an existing resource group named AzureFunctionsContainers-rg with a Windows function app or web app, you must use a different resource group.
 
-Create a general-purpose storage account in your resource group and region by using the az storage account create command. In the following example, replace <storage_name> with a globally unique name appropriate to you. Names must contain three to 24 characters numbers and lowercase letters only. Standard_LRS specifies a typical general-purpose account.
+15. Create a general-purpose storage account in your resource group and region by using the az storage account create command. In the following example, replace <storage_name> with a globally unique name appropriate to you. Names must contain three to 24 characters numbers and lowercase letters only. Standard_LRS specifies a typical general-purpose account.
 
 ```
 az storage account create --name <storage_name> --location westeurope --resource-group AzureFunctionsContainers-rg --sku Standard_LRS
 The storage account incurs only a few USD cents for this tutorial.
 ```
 
-Use the command to create a Premium plan for Azure Functions named myPremiumPlan in the Elastic Premium 1 pricing tier (--sku EP1), in the West Europe region (-location westeurope, or use a suitable region near you), and in a Linux container (--is-linux).
+16. Use the command to create a Premium plan for Azure Functions named myPremiumPlan in the Elastic Premium 1 pricing tier (--sku EP1), in the West Europe region (-location westeurope, or use a suitable region near you), and in a Linux container (--is-linux).
 
 ```
 az functionapp plan create --resource-group AzureFunctionsContainers-rg --name myPremiumPlan --location westeurope --number-of-workers 1 --sku EP1 --is-linux
@@ -296,3 +296,27 @@ az functionapp plan create --resource-group AzureFunctionsContainers-rg --name m
 We use the Premium plan here, which can scale as needed. To learn more about hosting, see Azure Functions hosting plans comparison. To calculate costs, see the Functions pricing page.
 
 The command also provisions an associated Azure Application Insights instance in the same resource group, with which you can monitor your function app and view logs. For more information, see Monitor Azure Functions. The instance incurs no costs until you activate it.
+
+### Create and configure a function app on Azure with the image
+A function app on Azure manages the execution of your functions in your hosting plan. In this section, you use the Azure resources from the previous section to create a function app from an image on Docker Hub and configure it with a connection string to Azure Storage.
+
+17. Create the Functions app using the az functionapp create command. In the following example, replace <storage_name> with the name you used in the previous section for the storage account. Also replace <app_name> with a globally unique name appropriate to you, and <docker_id> with your Docker ID.
+
+```
+az functionapp create --name <app_name> --storage-account <storage_name> --resource-group AzureFunctionsContainers-rg --plan myPremiumPlan --runtime <functions runtime stack> --deployment-container-image-name <docker_id>/azurefunctionsimage:v1.0.0
+```
+
+The deployment-container-image-name parameter specifies the image to use for the function app. You can use the az functionapp config container show command to view information about the image used for deployment. You can also use the az functionapp config container set command to deploy from a different image.
+
+18. Display the connection string for the storage account you created by using the az storage account show-connection-string command. Replace <storage-name> with the name of the storage account you created above:
+
+```
+az storage account show-connection-string --resource-group AzureFunctionsContainers-rg --name <storage_name> --query connectionString --output tsv
+```
+
+19. Add this setting to the function app by using the az functionapp config appsettings set command. In the following command, replace <app_name> with the name of your function app, and replace <connection_string> with the connection string from the previous step (a long encoded string that begins with "DefaultEndpointProtocol="):
+
+```
+az functionapp config appsettings set --name <app_name> --resource-group AzureFunctionsContainers-rg --settings AzureWebJobsStorage=<connection_string>
+```
+
