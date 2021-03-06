@@ -43,14 +43,17 @@ Deploying function code in a custom Linux container requires Premium plan or a D
 
 2. Open libary compiler to generate python package:
 
-![s2_02](img/s1_02.jpg)
+![s2_02](img/s2_02.jpg)
 
-![s2_03](img/s1_03.jpg)
+![s2_03](img/s2_03.jpg)
 
 3. Now you have the generated python package inside the "for_redistribution_files_only" folder :
 
+![s2_04](img/s2_04.jpg)
 
-![s2_04](img/s1_04.jpg)
+![s2_04](img/s2_05.jpg)
+
+
 
 
 
