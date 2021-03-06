@@ -241,6 +241,7 @@ docker run -p 8080:80 -it <docker_id>/azurefunctionsimage:v1.0.0
 Once the image is running in a local container, open a browser to http://localhost:8080, which should display the placeholder image shown below. 
 
 ![s2_07](img/s2_07.jpg)
+
 After you've verified the function app in the container, stop docker with Ctrl+C.
 
 ### Push the image to Docker Hub
