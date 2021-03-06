@@ -102,7 +102,13 @@ Files inside the "for_redistribution_files_only" folder:
 
 4. Open cmd, navigate to this foler to install this generated python package.
 
+```
+python setup.py install
+```
 
+You would get the outcome as follows:
+
+![s2_04](img/s2_06.jpg)
 
 ### Create and test the local functions project
 
