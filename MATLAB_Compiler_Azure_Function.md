@@ -111,7 +111,7 @@ You would get the outcome as follows:
 ![s2_04](img/s2_06.jpg)
 
 ### Create and test the local functions project
-#### I use powershell for the following steps.
+I use powershell for the following steps.
 
 4. In a terminal or command prompt, run the following command for your chosen language to create a function app project in a folder named LocalFunctionsProject.
 
