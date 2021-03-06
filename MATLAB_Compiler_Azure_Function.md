@@ -37,4 +37,20 @@ Deploying function code in a custom Linux container requires Premium plan or a D
 
 ## Example :
 
+1. Build MATLAB function as follows:
+
+![s1_01](img/s1_01.jpg)
+
+2. Open libary compiler to generate python package:
+
+![s2_02](img/s1_02.jpg)
+
+![s2_03](img/s1_03.jpg)
+
+3. Now you have the generated python package inside the "for_redistribution_files_only" folder :
+
+
+![s2_04](img/s1_04.jpg)
+
+
 
