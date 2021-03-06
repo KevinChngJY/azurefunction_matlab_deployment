@@ -231,8 +231,11 @@ ENV XAPPLRESDIR /etc/X11/app-defaults
 docker build --tag <DOCKER_ID>/azurefunctionsimage:v1.0.0 .
 ```
 
+Building this container for first time, it might take 1-2 hours (building subsequent changes is much faster) as we are downloding MCR and install it inside the docker container.
+
 When the command completes, you can run the new container locally.
-To test the build, run the image in a local container using the docker run command, replacing again <DOCKER_ID with your Docker ID and adding the ports argument, -p 8080:80:
+
+10. To test the build, run the image in a local container using the docker run command, replacing again <DOCKER_ID with your Docker ID and adding the ports argument, -p 8080:80:
 
 ```
 docker run -p 8080:80 -it <docker_id>/azurefunctionsimage:v1.0.0
@@ -245,4 +248,51 @@ Once the image is running in a local container, open a browser to http://localho
 After you've verified the function app in the container, stop docker with Ctrl+C.
 
 ### Push the image to Docker Hub
+Docker Hub is a container registry that hosts images and provides image and container services. To share your image, which includes deploying to Azure, you must push it to a registry.
 
+11. If you haven't already signed in to Docker, do so with the docker login command, replacing <docker_id> with your Docker ID. This command prompts you for your username and password. A "Login Succeeded" message confirms that you're signed in.
+
+```
+docker login
+```
+
+12. After you've signed in, push the image to Docker Hub by using the docker push command, again replacing <docker_id> with your Docker ID.
+
+```
+docker push <docker_id>/azurefunctionsimage:v1.0.0
+```
+
+Depending on your network speed, pushing the image the first time might take a 2-4 hours (pushing subsequent changes is much faster). The image is around 7GB as it includes MCR. While you're waiting, you can proceed to the next section and create Azure resources in another terminal.
+
+### Create supporting Azure resources for your function
+
+13. Sign in to Azure with the az login command:
+
+```
+az login
+```
+
+Create a resource group with the az group create command. The following example creates a resource group named AzureFunctionsContainers-rg in the westeurope region. (You generally create your resource group and resources in a region near you, using an available region from the az account list-locations command.)
+
+```
+az group create --name AzureFunctionsContainers-rg --location westeurope
+```
+
+You can't host Linux and Windows apps in the same resource group. If you have an existing resource group named AzureFunctionsContainers-rg with a Windows function app or web app, you must use a different resource group.
+
+Create a general-purpose storage account in your resource group and region by using the az storage account create command. In the following example, replace <storage_name> with a globally unique name appropriate to you. Names must contain three to 24 characters numbers and lowercase letters only. Standard_LRS specifies a typical general-purpose account.
+
+```
+az storage account create --name <storage_name> --location westeurope --resource-group AzureFunctionsContainers-rg --sku Standard_LRS
+The storage account incurs only a few USD cents for this tutorial.
+```
+
+Use the command to create a Premium plan for Azure Functions named myPremiumPlan in the Elastic Premium 1 pricing tier (--sku EP1), in the West Europe region (-location westeurope, or use a suitable region near you), and in a Linux container (--is-linux).
+
+```
+az functionapp plan create --resource-group AzureFunctionsContainers-rg --name myPremiumPlan --location westeurope --number-of-workers 1 --sku EP1 --is-linux
+```
+
+We use the Premium plan here, which can scale as needed. To learn more about hosting, see Azure Functions hosting plans comparison. To calculate costs, see the Functions pricing page.
+
+The command also provisions an associated Azure Application Insights instance in the same resource group, with which you can monitor your function app and view logs. For more information, see Monitor Azure Functions. The instance incurs no costs until you activate it.
