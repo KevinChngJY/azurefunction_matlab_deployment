@@ -5,19 +5,36 @@ Use window as development environment and pusblish to Azure Function
 
 ## Introduction :
 
-MATLAB is not supported natively with Azure Function – Serverless. For workaround, we have to generate standalone c/c++ source code from MATLAB algorithm and wrap it as dll. 
-By default, Azure function supports 32bits Platform, it might require more troubleshooting if we try to switch it to 64bits. Therefore, the generated MATLAB .dll has to be 32bits. This process could be done using MATLAB Coder and Visual Studio Compiler. Subsequently, we embed this .dll into our Azure Function dotnet framework and later deploy to Azure Cloud. However, MATLAB Coder does not support code generation for all MATLAB function, you may refer to the list below for supported function :
-https://www.mathworks.com/help/coder/ug/functions-and-objects-supported-for-cc-code-generation.html
+MATLAB is not supported natively with Azure Function – Serverless. Recently, Azure Function supports docker image, now we can create Azure Functions as a custom Docker container using a Linux base image. Docker conatiners open the door to hosting in a lot more environments than previously possible. This combo give us the flexibility to easily deploy and run our microservices either in the cloud or on-premises.
+
+This customer image allows us to install additional dependency or configuration that isn't provided by the built in image. We insall MATLAB runtime (MCR) inside this custom docker container to provide the environment to run MATLAB code.
+
+Although you are allowed to install additional dependency inside the custom docker, it is still restricted us to only use the following languages: C#,Java,Javascript,PowerShell,Python,TypeScript
+
+For this solution, I use python as a bridge to linkup Azure Function and MCR. However, when you are selecting other languages, kindly make sure that your selected linux base image is 64bit which MCR requires 64bits environment.
+
+Azure Function Image Overview:
+https://hub.docker.com/_/microsoft-azure-functions-base
+
+Azure Function image for python :
+https://hub.docker.com/_/microsoft-azure-functions-python
+
+Deploying function code in a custom Linux container requires Premium plan or a Dedicated (App Service) plan hosting. Therefore, completing this example might incurs costs of a few US dollars in your Azure account, which you can minimize by cleaning-up resources when you're done.
+
 
 ### Pre-requisites:
-1) [Install Azure Function Tool](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash#v2)
-2)	Microsoft Visual Studio 9.0/10.0/11.0/12.0/14.0/15.0
-3)	MATLAB & MATLAB Coder
+1) [Azure Function Tool](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash#v2)
+2) The Azure CLI version 2.4 or later.
+3) Python 3.8 (64-bit), Python 3.7 (64-bit), Python 3.6 (64-bit), which are supported by Azure Functions.
+4) Docker and Docker ID
+5) MATLAB and MATLAB Compiler SDK
 
 ### References:
-1)	[Generate 32bits dll using MATLAB Coder](https://www.mathworks.com/help/coder/ug/build-32-bit-dll-on-64-bit-windows-platform-using-msvc-toolchain.html)
-2)	[Create C# function in Azure for Command Line (Azure Function)](https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cbrowser)
+1) [Generate Python Package and Build Python Application](https://www.mathworks.com/help/compiler_sdk/gs/create-a-python-application-with-matlab-code.htmll)
+2) [Create a function on Linux using a custom container (Azure Function)]https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-function-linux-custom-image?tabs=bash%2Cportal&pivots=programming-language-python)
 
 ---
 
 ## Example :
+
+
