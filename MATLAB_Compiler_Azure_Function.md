@@ -29,6 +29,49 @@ Deploying function code in a custom Linux container requires Premium plan or a D
 4) Docker and Docker ID
 5) MATLAB and MATLAB Compiler SDK
 
+### Prerequisite check
+In a terminal or command window, 
+
+1) Run 
+
+...
+func --version 
+...
+
+to check that the Azure Functions Core Tools are version 2.7.1846 or later.
+
+2) Run 
+
+...
+az --version 
+...
+
+to check that the Azure CLI version is 2.0.76 or later.
+
+3) Run 
+
+...
+az login 
+...
+
+to sign in to Azure and verify an active subscription.
+
+4) Run 
+
+...
+python --version (Linux/MacOS) or py --version (Windows) 
+...
+
+to check your Python version reports 3.8.x, 3.7.x or 3.6.x.
+
+5) Run
+
+...
+docker login 
+...
+
+to sign in to Docker. This command fails if Docker isn't running, in which case start docker and retry the command.
+
 ### References:
 1) [Generate Python Package and Build Python Application](https://www.mathworks.com/help/compiler_sdk/gs/create-a-python-application-with-matlab-code.htmll)
 2) [Create a function on Linux using a custom container (Azure Function)]https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-function-linux-custom-image?tabs=bash%2Cportal&pivots=programming-language-python)
@@ -50,6 +93,8 @@ Deploying function code in a custom Linux container requires Premium plan or a D
 3. Now you have the generated python package inside the "for_redistribution_files_only" folder :
 
 ![s2_04](img/s2_04.jpg)
+
+Files inside the "for_redistribution_files_only" folder:
 
 ![s2_04](img/s2_05.jpg)
 
