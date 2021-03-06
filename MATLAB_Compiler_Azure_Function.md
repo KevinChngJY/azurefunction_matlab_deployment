@@ -98,7 +98,7 @@ to sign in to Docker. This command fails if Docker isn't running, in which case 
 
 Files inside the "for_redistribution_files_only" folder:
 
-![s2_04](img/s2_05.jpg)
+![s2_05](img/s2_05.jpg)
 
 4. Open cmd, navigate to this foler to install this generated python package.
 
@@ -108,7 +108,7 @@ python setup.py install
 
 You would get the outcome as follows:
 
-![s2_04](img/s2_06.jpg)
+![s2_06](img/s2_06.jpg)
 
 ### Create and test the local functions project
 I use powershell for the following steps.
@@ -174,7 +174,74 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 func start  
 ```
 
+Once you see the HttpExample endpoint appear in the output, navigate to http://localhost:7071/api/HttpExample?value1=2%value2=3. The browser should display the summation of valiue1 and value2 that echoes back Functions.
+
+### Build the container image and test locally
+
+9. Edit the docker files: (the dockerfile is in the root of project folder)
 
 
+```
+# To enable ssh & remote debugging on app service change the base image to the one below
+# FROM mcr.microsoft.com/azure-functions/python:3.0-python3.7-appservice
+FROM mcr.microsoft.com/azure-functions/python:3.0-python3.7
 
+ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
+    AzureFunctionsJobHost__Logging__Console__IsEnabled=true
+
+COPY requirements.txt /
+RUN pip install -r /requirements.txt
+
+COPY . /home/site/wwwroot
+
+ENV DEBIAN_FRONTEND noninteractive
+COPY setup.py /
+ADD /myadd  /myadd
+RUN python setup.py install
+
+RUN apt-get -q update && \
+    apt-get install -q -y --no-install-recommends \
+      xorg \
+      unzip \
+      wget \
+      curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+	
+# Download the MCR from MathWorks site an install with -mode silent
+RUN mkdir /mcr-install && \
+    mkdir /opt/mcr && \
+    cd /mcr-install && \
+    wget --no-check-certificate -q https://ssd.mathworks.com/supportfiles/downloads/R2020a/Release/3/deployment_files/installer/complete/glnxa64/MATLAB_Runtime_R2020a_Update_3_glnxa64.zip && \
+    unzip -q MATLAB_Runtime_R2020a_Update_3_glnxa64.zip && \
+    rm -f MATLAB_Runtime_R2020a_Update_3_glnxa64.zip && \
+    ./install -destinationFolder /opt/mcr -agreeToLicense yes -mode silent && \
+    cd / && \
+    rm -rf mcr-install
+
+#Configure environment variables for MCR
+ENV LD_LIBRARY_PATH /opt/mcr/v98/runtime/glnxa64:/opt/mcr/v98/bin/glnxa64:/opt/mcr/v98/sys/os/glnxa64:/opt/mcr/v98/extern/bin/glnxa64
+ENV XAPPLRESDIR /etc/X11/app-defaults
+```
+
+9. In the root project folder, run the docker build command, and provide a name, azurefunctionsimage, and tag, v1.0.0. Replace <DOCKER_ID> with your Docker Hub account ID. This command builds the Docker image for the container.
+
+```
+docker build --tag <DOCKER_ID>/azurefunctionsimage:v1.0.0 .
+```
+
+When the command completes, you can run the new container locally.
+To test the build, run the image in a local container using the docker run command, replacing again <DOCKER_ID with your Docker ID and adding the ports argument, -p 8080:80:
+
+```
+docker run -p 8080:80 -it <docker_id>/azurefunctionsimage:v1.0.0
+```
+
+Once the image is running in a local container, open a browser to http://localhost:8080, which should display the placeholder image shown below. 
+
+![s2_07](img/s2_07.jpg)
+After you've verified the function app in the container, stop docker with Ctrl+C.
+
+### Push the image to Docker Hub
 
