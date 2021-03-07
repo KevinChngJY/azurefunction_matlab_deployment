@@ -110,10 +110,11 @@ You would get the outcome as follows:
 
 ![s2_06](img/s2_06.jpg)
 
+
 ### Create and test the local functions project
 I use powershell for the following steps.
 
-4. In a terminal or command prompt, run the following command for your chosen language to create a function app project in a folder named LocalFunctionsProject.
+5. In a terminal or command prompt, run the following command for your chosen language to create a function app project in a folder named LocalFunctionsProject.
 
 ```
 func init LocalFunctionsProject --worker-runtime python --docker
@@ -121,19 +122,19 @@ func init LocalFunctionsProject --worker-runtime python --docker
 
 The --docker option generates a Dockerfile for the project, which defines a suitable custom container for use with Azure Functions and the selected runtime.
 
-5. Navigate into the project folder:
+6. Navigate into the project folder:
 
 ```
 cd LocalFunctionsProject
 ```
 
-6. Add a function to your project by using the following command, where the --name argument is the unique name of your function and the --template argument specifies the function's trigger. 
+7. Add a function to your project by using the following command, where the --name argument is the unique name of your function and the --template argument specifies the function's trigger. 
 
 ```
 func new --name HttpExample --template "HTTP trigger"
 ```
 
-7. Edit HTTP triger to import our generated Python package :
+8. Edit HTTP triger to import our generated Python package :
 
 Open HttpExample Folder, then open "init.py", edit it to as follows:
 
@@ -168,7 +169,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         )
 ```
 
-8. To test the function locally, start the local Azure Functions runtime host in the root of the project folder:
+9. To test the function locally, start the local Azure Functions runtime host in the root of the project folder:
 
 ```
 func start  
@@ -177,6 +178,18 @@ func start
 Once you see the HttpExample endpoint appear in the output, navigate to http://localhost:7071/api/HttpExample?value1=2%value2=3. The browser should display the summation of valiue1 and value2 that echoes back Functions.
 
 ### Build the container image and test locally
+
+10. Copy MATLAB generated python package to the root of Azure Function projct folder.
+
+Copy from :
+
+![s1_13](img/s1_13.jpg)
+
+![s1_14](img/s1_14.jpg)
+
+Paste to :
+
+![s1_15](img/s1_15.jpg)
 
 9. Edit the docker files: (the dockerfile is in the root of project folder)
 
