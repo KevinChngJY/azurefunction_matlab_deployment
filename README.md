@@ -1,5 +1,4 @@
 # Deploy MATLAB Algorithm to Azure Function
-(Still writing)
 
 ---
 
@@ -80,12 +79,12 @@ Before you begin, you must have the following:
 ### References:
 The links below are my references for this solution:
 
-1) [Generate Python Package and Build Python Application](https://www.mathworks.com/help/compiler_sdk/gs/create-a-python-application-with-matlab-code.htmll)
+1) [Generate Python Package and Build Python Application](https://www.mathworks.com/help/compiler_sdk/gs/create-a-python-application-with-matlab-code.html)
 2) [Create a function on Linux using a custom container (Azure Function)]https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-function-linux-custom-image?tabs=bash%2Cportal&pivots=programming-language-python)
 
 ### Example :
 
-Use Window as development environment : drafting
+Use Window as development environment : [Example](https://github.com/KevinChngJY/azurefunction_matlab_deployment/blob/main/MATLAB_Compiler_Azure_Function.md)
 
 Use linux as development environment : drafting
 
