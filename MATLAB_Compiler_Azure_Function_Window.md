@@ -191,7 +191,7 @@ Paste to :
 
 ![s1_15](img/s1_15.jpg)
 
-9. Edit the docker files: (the dockerfile is in the root of project folder)
+11. Edit the docker files: (the dockerfile is in the root of project folder)
 
 
 ```
@@ -238,7 +238,7 @@ ENV LD_LIBRARY_PATH /opt/mcr/v98/runtime/glnxa64:/opt/mcr/v98/bin/glnxa64:/opt/m
 ENV XAPPLRESDIR /etc/X11/app-defaults
 ```
 
-9. In the root project folder, run the docker build command, and provide a name, azurefunctionsimage, and tag, v1.0.0. Replace <DOCKER_ID> with your Docker Hub account ID. This command builds the Docker image for the container.
+12. In the root project folder, run the docker build command, and provide a name, azurefunctionsimage, and tag, v1.0.0. Replace <DOCKER_ID> with your Docker Hub account ID. This command builds the Docker image for the container.
 
 ```
 docker build --tag <DOCKER_ID>/azurefunctionsimage:v1.0.0 .
@@ -248,7 +248,7 @@ Building this container for first time, it might take 1-2 hours (building subseq
 
 When the command completes, you can run the new container locally.
 
-10. To test the build, run the image in a local container using the docker run command, replacing again <DOCKER_ID with your Docker ID and adding the ports argument, -p 8080:80:
+13. To test the build, run the image in a local container using the docker run command, replacing again <DOCKER_ID with your Docker ID and adding the ports argument, -p 8080:80:
 
 ```
 docker run -p 8080:80 -it <docker_id>/azurefunctionsimage:v1.0.0
@@ -263,13 +263,13 @@ After you've verified the function app in the container, stop docker with Ctrl+C
 ### Push the image to Docker Hub
 Docker Hub is a container registry that hosts images and provides image and container services. To share your image, which includes deploying to Azure, you must push it to a registry.
 
-11. If you haven't already signed in to Docker, do so with the docker login command, replacing <docker_id> with your Docker ID. This command prompts you for your username and password. A "Login Succeeded" message confirms that you're signed in.
+14. If you haven't already signed in to Docker, do so with the docker login command, replacing <docker_id> with your Docker ID. This command prompts you for your username and password. A "Login Succeeded" message confirms that you're signed in.
 
 ```
 docker login
 ```
 
-12. After you've signed in, push the image to Docker Hub by using the docker push command, again replacing <docker_id> with your Docker ID.
+15. After you've signed in, push the image to Docker Hub by using the docker push command, again replacing <docker_id> with your Docker ID.
 
 ```
 docker push <docker_id>/azurefunctionsimage:v1.0.0
@@ -279,13 +279,13 @@ Depending on your network speed, pushing the image the first time might take a 2
 
 ### Create supporting Azure resources for your function
 
-13. Sign in to Azure with the az login command:
+16. Sign in to Azure with the az login command:
 
 ```
 az login
 ```
 
-14. reate a resource group with the az group create command. The following example creates a resource group named AzureFunctionsContainers-rg in the westeurope region. (You generally create your resource group and resources in a region near you, using an available region from the az account list-locations command.)
+17. reate a resource group with the az group create command. The following example creates a resource group named AzureFunctionsContainers-rg in the westeurope region. (You generally create your resource group and resources in a region near you, using an available region from the az account list-locations command.)
 
 ```
 az group create --name AzureFunctionsContainers-rg --location westeurope
@@ -293,14 +293,14 @@ az group create --name AzureFunctionsContainers-rg --location westeurope
 
 You can't host Linux and Windows apps in the same resource group. If you have an existing resource group named AzureFunctionsContainers-rg with a Windows function app or web app, you must use a different resource group.
 
-15. Create a general-purpose storage account in your resource group and region by using the az storage account create command. In the following example, replace <storage_name> with a globally unique name appropriate to you. Names must contain three to 24 characters numbers and lowercase letters only. Standard_LRS specifies a typical general-purpose account.
+18. Create a general-purpose storage account in your resource group and region by using the az storage account create command. In the following example, replace <storage_name> with a globally unique name appropriate to you. Names must contain three to 24 characters numbers and lowercase letters only. Standard_LRS specifies a typical general-purpose account.
 
 ```
 az storage account create --name <storage_name> --location westeurope --resource-group AzureFunctionsContainers-rg --sku Standard_LRS
 The storage account incurs only a few USD cents for this tutorial.
 ```
 
-16. Use the command to create a Premium plan for Azure Functions named myPremiumPlan in the Elastic Premium 1 pricing tier (--sku EP1), in the West Europe region (-location westeurope, or use a suitable region near you), and in a Linux container (--is-linux).
+19. Use the command to create a Premium plan for Azure Functions named myPremiumPlan in the Elastic Premium 1 pricing tier (--sku EP1), in the West Europe region (-location westeurope, or use a suitable region near you), and in a Linux container (--is-linux).
 
 ```
 az functionapp plan create --resource-group AzureFunctionsContainers-rg --name myPremiumPlan --location westeurope --number-of-workers 1 --sku EP1 --is-linux
@@ -313,7 +313,7 @@ The command also provisions an associated Azure Application Insights instance in
 ### Create and configure a function app on Azure with the image
 A function app on Azure manages the execution of your functions in your hosting plan. In this section, you use the Azure resources from the previous section to create a function app from an image on Docker Hub and configure it with a connection string to Azure Storage.
 
-17. Create the Functions app using the az functionapp create command. In the following example, replace <storage_name> with the name you used in the previous section for the storage account. Also replace <app_name> with a globally unique name appropriate to you, and <docker_id> with your Docker ID.
+20. Create the Functions app using the az functionapp create command. In the following example, replace <storage_name> with the name you used in the previous section for the storage account. Also replace <app_name> with a globally unique name appropriate to you, and <docker_id> with your Docker ID.
 
 ```
 az functionapp create --name <app_name> --storage-account <storage_name> --resource-group AzureFunctionsContainers-rg --plan myPremiumPlan --runtime python --deployment-container-image-name <docker_id>/azurefunctionsimage:v1.0.0
@@ -321,19 +321,19 @@ az functionapp create --name <app_name> --storage-account <storage_name> --resou
 
 The deployment-container-image-name parameter specifies the image to use for the function app. You can use the az functionapp config container show command to view information about the image used for deployment. You can also use the az functionapp config container set command to deploy from a different image.
 
-18. Display the connection string for the storage account you created by using the az storage account show-connection-string command. Replace <storage-name> with the name of the storage account you created above:
+21. Display the connection string for the storage account you created by using the az storage account show-connection-string command. Replace <storage-name> with the name of the storage account you created above:
 
 ```
 az storage account show-connection-string --resource-group AzureFunctionsContainers-rg --name <storage_name> --query connectionString --output tsv
 ```
 
-19. Add this setting to the function app by using the az functionapp config appsettings set command. In the following command, replace <app_name> with the name of your function app, and replace <connection_string> with the connection string from the previous step (a long encoded string that begins with "DefaultEndpointProtocol="):
+22. Add this setting to the function app by using the az functionapp config appsettings set command. In the following command, replace <app_name> with the name of your function app, and replace <connection_string> with the connection string from the previous step (a long encoded string that begins with "DefaultEndpointProtocol="):
 
 ```
 az functionapp config appsettings set --name <app_name> --resource-group AzureFunctionsContainers-rg --settings AzureWebJobsStorage=<connection_string>
 ```
 
-20. Get your function app url link and test it with your browser:
+23. Get your function app url link and test it with your browser:
 
 ```
 func azure functionapp list-functions <APP_NAME>
