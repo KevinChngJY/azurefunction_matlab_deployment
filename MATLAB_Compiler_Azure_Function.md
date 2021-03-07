@@ -303,7 +303,7 @@ A function app on Azure manages the execution of your functions in your hosting 
 17. Create the Functions app using the az functionapp create command. In the following example, replace <storage_name> with the name you used in the previous section for the storage account. Also replace <app_name> with a globally unique name appropriate to you, and <docker_id> with your Docker ID.
 
 ```
-az functionapp create --name <app_name> --storage-account <storage_name> --resource-group AzureFunctionsContainers-rg --plan myPremiumPlan --runtime <functions runtime stack> --deployment-container-image-name <docker_id>/azurefunctionsimage:v1.0.0
+az functionapp create --name <app_name> --storage-account <storage_name> --resource-group AzureFunctionsContainers-rg --plan myPremiumPlan --runtime python --deployment-container-image-name <docker_id>/azurefunctionsimage:v1.0.0
 ```
 
 The deployment-container-image-name parameter specifies the image to use for the function app. You can use the az functionapp config container show command to view information about the image used for deployment. You can also use the az functionapp config container set command to deploy from a different image.
@@ -320,3 +320,12 @@ az storage account show-connection-string --resource-group AzureFunctionsContain
 az functionapp config appsettings set --name <app_name> --resource-group AzureFunctionsContainers-rg --settings AzureWebJobsStorage=<connection_string>
 ```
 
+20. Get your function app url link and test it with your browser:
+
+```
+func azure functionapp list-functions <APP_NAME>
+```
+
+---
+## Complete
+---
