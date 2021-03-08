@@ -86,9 +86,20 @@ The links below are my references for this solution:
 
 Use Window as development environment : [Example](https://github.com/KevinChngJY/azurefunction_matlab_deployment/blob/main/MATLAB_Compiler_Azure_Function_Window.md)
 
-Use linux as development environment : [Example](https://github.com/KevinChngJY/azurefunction_matlab_deployment/blob/main/MATLAB_Compiler_Azure_Function_Linux.md)
+Use linux as development environment : [Example](https://github.com/KevinChngJY/azurefunction_matlab_deployment/blob/main/MATLAB_Compiler_Azure_Function_Linux.md) : Drafting
 
 ---
 
 ## Other possibilities
+
+![Arhictecture_3](img/s3_01.jpg)
+
+With Azure Function Docker Conatiner, it allows us to install MATLAB Runtime into it. 
+Besides python in solution 2, you may consider to use other supported language for your Azure Docker Container.
+
+You may refer to their supported list of docker image and ensure your selected image is 64bits:
+https://hub.docker.com/_/microsoft-azure-functions-base
+
+
+
 
