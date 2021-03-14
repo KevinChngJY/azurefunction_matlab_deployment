@@ -267,6 +267,8 @@ ENV LD_LIBRARY_PATH /opt/mcr/v98/runtime/glnxa64:/opt/mcr/v98/bin/glnxa64:/opt/m
 ENV XAPPLRESDIR /etc/X11/app-defaults
 ```
 
+If you are using different version of MATLAB,you might need to modify the docker file above so it install your specific version MATLAB runtime. You are welcome to approach me if you have question to modify the docker script, I try to help at my convenient.
+
 13. In the root project folder, run the docker build command, and provide a name, azurefunctionsimage, and tag, v1.0.0. Replace <DOCKER_ID> with your Docker Hub account ID. This command builds the Docker image for the container.
 
 ```
