@@ -96,3 +96,133 @@ MATLAB is in linux Machine
 3. Now you have the generated file :
 
 ![s2_04](img/s4_04.jpg)
+
+Now you could continue your process in linux or Window:
+I move all the generated file to Window Computer:
+
+4. In Window Computer, open cmd, navigate to "for_redistribution_files_only" to install this generated python package.
+
+```
+python setup.py install
+```
+
+You would get the outcome as follows:
+
+![s2_06](img/s2_06.jpg)
+
+### Create and test the local functions project
+I use powershell in window to continue the following steps:
+
+5. In a terminal or command prompt, run the following command for your chosen language to create a function app project in a folder named LocalFunctionsProject.
+
+```
+func init LocalFunctionsProject --worker-runtime python --docker
+```
+
+The --docker option generates a Dockerfile for the project, which defines a suitable custom container for use with Azure Functions and the selected runtime.
+
+6. Navigate into the project folder:
+
+```
+cd LocalFunctionsProject
+```
+
+7. Add a function to your project by using the following command, where the --name argument is the unique name of your function and the --template argument specifies the function's trigger. 
+
+```
+func new --name HttpExample --template "HTTP trigger"
+```
+
+8. Edit HTTP triger to import our generated Python package :
+
+Open HttpExample Folder, then open "init.py", edit it to as follows:
+
+```
+import logging
+import azure.functions as func
+import myadd
+
+def main(req: func.HttpRequest) -> func.HttpResponse:
+	logging.info('Python HTTP trigger function processed a request.')
+	value1 = req.params.get('value1')
+	value2 = req.params.get('value2')
+	
+	if not value1:
+		try:
+			req_body = req.get_json()
+		except ValueError:
+			pass
+		else:
+			value1= req_body.get('value1')
+			value2= req_body.get('value2')
+	
+	if value1:
+		myadd.initialize_runtime(['-nojvm', '-nodisplay'])
+		m=myadd.initialize()
+		final = m.myadd(float(value1),float(value2))
+		return func.HttpResponse(f"Hello, value1+value2 is {final}")
+	else:
+		return func.HttpResponse(
+             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
+             status_code=200
+        )
+```
+
+9. Edit HTTP triger to import our generated Python package :
+
+Open HttpExample Folder, then open "function.json", edit it to as follows:
+
+```
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
+    }
+  ]
+}
+```
+
+Notes : Change authLevel from function to anonymous.
+
+10. To test the function locally, start the local Azure Functions runtime host in the root of the project folder:
+
+```
+func start  
+```
+
+Once you see the HttpExample endpoint appear in the output, navigate to http://localhost:7071/api/HttpExample?value1=2%value2=3. The browser should display the summation of valiue1 and value2 that echoes back Functions.
+
+### Build the container image and test locally
+
+11. Copy MATLAB generated python package to the root of Azure Function projct folder.
+
+Copy from :
+
+![s4_05](img/s4_05.jpg)
+
+![s4_06](img/s4_06.jpg)
+
+Copy from :
+
+![s1_13](img/s1_13.jpg)
+
+![s1_14](img/s1_14.jpg)
+
+Paste to :
+
+![s1_15](img/s4_07.jpg)
+
+12. Edit the docker files: (the dockerfile is in the root of project folder)
