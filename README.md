@@ -86,7 +86,7 @@ The links below are my references for this solution:
 
 Use Window as development environment : [Example](https://github.com/KevinChngJY/azurefunction_matlab_deployment/blob/main/MATLAB_Compiler_Azure_Function_Window.md)
 
-Use linux as development environment : [Example](https://github.com/KevinChngJY/azurefunction_matlab_deployment/blob/main/MATLAB_Compiler_Azure_Function_Linux.md) : Drafting
+Use linux as development environment : [Example](https://github.com/KevinChngJY/azurefunction_matlab_deployment/blob/main/MATLAB_Compiler_Azure_Function_Linux.md)
 
 ---
 
