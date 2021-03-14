@@ -27,7 +27,7 @@ Deploying function code in a custom Linux container requires Premium plan or a D
 2) The Azure CLI version 2.4 or later.
 3) Python 3.8 (64-bit), Python 3.7 (64-bit), Python 3.6 (64-bit), which are supported by Azure Functions.
 4) Docker and Docker ID
-5) MATLAB and MATLAB Compiler SDK
+5) MATLAB and MATLAB Compiler SDK (R2020a)
 
 ### Prerequisite check
 In a terminal or command window, 
