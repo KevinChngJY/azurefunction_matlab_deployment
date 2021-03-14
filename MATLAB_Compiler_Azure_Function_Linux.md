@@ -326,8 +326,9 @@ You can't host Linux and Windows apps in the same resource group. If you have an
 
 ```
 az storage account create --name <storage_name> --location westeurope --resource-group AzureFunctionsContainers-rg --sku Standard_LRS
-The storage account incurs only a few USD cents for this tutorial.
 ```
+
+The storage account incurs only a few USD cents for this tutorial.
 
 20. Use the command to create a Premium plan for Azure Functions named myPremiumPlan in the Elastic Premium 1 pricing tier (--sku EP1), in the West Europe region (-location westeurope, or use a suitable region near you), and in a Linux container (--is-linux).
 
