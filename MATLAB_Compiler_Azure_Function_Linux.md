@@ -226,3 +226,149 @@ Paste to :
 ![s1_15](img/s4_07.jpg)
 
 12. Edit the docker files: (the dockerfile is in the root of project folder)
+
+
+```
+# To enable ssh & remote debugging on app service change the base image to the one below
+# FROM mcr.microsoft.com/azure-functions/python:3.0-python3.7-appservice
+FROM mcr.microsoft.com/azure-functions/python:3.0-python3.7
+ENV DEBIAN_FRONTEND noninteractive
+
+ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
+    AzureFunctionsJobHost__Logging__Console__IsEnabled=true
+
+COPY requirements.txt /
+RUN pip install -r /requirements.txt
+
+COPY . /home/site/wwwroot
+
+COPY setup.py /
+ADD /myadd  /myadd
+RUN python setup.py install
+
+#FROM matlabruntime/r2020b/release/update4/4000000000000000
+RUN apt-get -q update && \
+    apt-get install -q -y --no-install-recommends \
+      xorg \
+      unzip \
+      wget \
+      curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+	
+COPY MyAppInstaller_mcr.install /
+RUN /MyAppInstaller_mcr.install -destinationFolder /opt/mcr -mode silent -agreeToLicense yes
+#Configure environment variables for MCR
+ENV LD_LIBRARY_PATH /opt/mcr/v99/runtime/glnxa64:/opt/mcr/v99/bin/glnxa64:/opt/mcr/v99/sys/os/glnxa64:/opt/mcr/v99/extern/bin/glnxa64
+ENV XAPPLRESDIR /etc/X11/app-defaults
+```
+
+If you are using different version of MATLAB,you might need to modify the docker file above-take note at the last no.2 line, v99 is the installtion location for MATLAB Runtime 2020b. For other version, it has different name, for example, R2020a is v98.
+
+If you have questions about the docker file, you are welcome to approach me. I will try my best to help ip if possible.
+
+13. In the root project folder, run the docker build command, and provide a name, azurefunctionsimage, and tag, v1.0.0. Replace <DOCKER_ID> with your Docker Hub account ID. This command builds the Docker image for the container.
+
+```
+docker build --tag <DOCKER_ID>/azurefunctionsimage:v1.0.0 .
+```
+
+Building this container for first time, it might take 1-2 hours (building subsequent changes is much faster) as we are downloding MCR and install it inside the docker container.
+
+When the command completes, you can run the new container locally.
+
+14. To test the build, run the image in a local container using the docker run command, replacing again <DOCKER_ID with your Docker ID and adding the ports argument, -p 8080:80:
+
+```
+docker run -p 8080:80 -it <docker_id>/azurefunctionsimage:v1.0.0
+```
+
+Once the image is running in a local container, open a browser to http://localhost:8080, which should display the placeholder image shown below. 
+
+![s2_07](img/s2_07.jpg)
+
+After you've verified the function app in the container, stop docker with Ctrl+C.
+
+### Push the image to Docker Hub
+Docker Hub is a container registry that hosts images and provides image and container services. To share your image, which includes deploying to Azure, you must push it to a registry.
+
+15. If you haven't already signed in to Docker, do so with the docker login command, replacing <docker_id> with your Docker ID. This command prompts you for your username and password. A "Login Succeeded" message confirms that you're signed in.
+
+```
+docker login
+```
+
+16. After you've signed in, push the image to Docker Hub by using the docker push command, again replacing <docker_id> with your Docker ID.
+
+```
+docker push <docker_id>/azurefunctionsimage:v1.0.0
+```
+
+Depending on your network speed, pushing the image the first time might take a 2-4 hours (pushing subsequent changes is much faster). The image is around 7GB as it includes MCR. While you're waiting, you can proceed to the next section and create Azure resources in another terminal.
+
+### Create supporting Azure resources for your function
+
+17. Sign in to Azure with the az login command:
+
+```
+az login
+```
+
+18. reate a resource group with the az group create command. The following example creates a resource group named AzureFunctionsContainers-rg in the westeurope region. (You generally create your resource group and resources in a region near you, using an available region from the az account list-locations command.)
+
+```
+az group create --name AzureFunctionsContainers-rg --location westeurope
+```
+
+You can't host Linux and Windows apps in the same resource group. If you have an existing resource group named AzureFunctionsContainers-rg with a Windows function app or web app, you must use a different resource group.
+
+19. Create a general-purpose storage account in your resource group and region by using the az storage account create command. In the following example, replace <storage_name> with a globally unique name appropriate to you. Names must contain three to 24 characters numbers and lowercase letters only. Standard_LRS specifies a typical general-purpose account.
+
+```
+az storage account create --name <storage_name> --location westeurope --resource-group AzureFunctionsContainers-rg --sku Standard_LRS
+The storage account incurs only a few USD cents for this tutorial.
+```
+
+20. Use the command to create a Premium plan for Azure Functions named myPremiumPlan in the Elastic Premium 1 pricing tier (--sku EP1), in the West Europe region (-location westeurope, or use a suitable region near you), and in a Linux container (--is-linux).
+
+```
+az functionapp plan create --resource-group AzureFunctionsContainers-rg --name myPremiumPlan --location westeurope --number-of-workers 1 --sku EP1 --is-linux
+```
+
+We use the Premium plan here, which can scale as needed. To learn more about hosting, see Azure Functions hosting plans comparison. To calculate costs, see the Functions pricing page.
+
+The command also provisions an associated Azure Application Insights instance in the same resource group, with which you can monitor your function app and view logs. For more information, see Monitor Azure Functions. The instance incurs no costs until you activate it.
+
+### Create and configure a function app on Azure with the image
+A function app on Azure manages the execution of your functions in your hosting plan. In this section, you use the Azure resources from the previous section to create a function app from an image on Docker Hub and configure it with a connection string to Azure Storage.
+
+21. Create the Functions app using the az functionapp create command. In the following example, replace <storage_name> with the name you used in the previous section for the storage account. Also replace <app_name> with a globally unique name appropriate to you, and <docker_id> with your Docker ID.
+
+```
+az functionapp create --name <app_name> --storage-account <storage_name> --resource-group AzureFunctionsContainers-rg --plan myPremiumPlan --runtime python --deployment-container-image-name <docker_id>/azurefunctionsimage:v1.0.0
+```
+
+The deployment-container-image-name parameter specifies the image to use for the function app. You can use the az functionapp config container show command to view information about the image used for deployment. You can also use the az functionapp config container set command to deploy from a different image.
+
+22. Display the connection string for the storage account you created by using the az storage account show-connection-string command. Replace <storage-name> with the name of the storage account you created above:
+
+```
+az storage account show-connection-string --resource-group AzureFunctionsContainers-rg --name <storage_name> --query connectionString --output tsv
+```
+
+23. Add this setting to the function app by using the az functionapp config appsettings set command. In the following command, replace <app_name> with the name of your function app, and replace <connection_string> with the connection string from the previous step (a long encoded string that begins with "DefaultEndpointProtocol="):
+
+```
+az functionapp config appsettings set --name <app_name> --resource-group AzureFunctionsContainers-rg --settings AzureWebJobsStorage=<connection_string>
+```
+
+24. Get your function app url link and test it with your browser:
+
+```
+func azure functionapp list-functions <APP_NAME>
+```
+
+---
+## Complete
+---
+
